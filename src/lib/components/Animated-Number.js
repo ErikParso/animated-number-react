@@ -35,7 +35,6 @@ class AnimatedNumber extends Component {
   };
 
   componentDidMount = () => {
-    this.mounted = true;
     this.animateValue();
   };
 
@@ -44,10 +43,8 @@ class AnimatedNumber extends Component {
   };
 
   componentWillUnmount = () => {
-    this.mounted = false;
+    this.stopAnimation();
   };
-
-  mounted = false;
 
   target = {
     animatedValue: 0,
@@ -56,17 +53,25 @@ class AnimatedNumber extends Component {
   updateValue = (anima) => {
     this.props.update(anima);
     const { animatedValue } = this.target;
-    if (this.mounted) {
-      this.setState({ animatedValue });
-    }
+    this.setState({ animatedValue });
+  };
+
+  stopAnimation = () => {
+    if (!this.instance) return;
+
+    this.instance.pause();
+    this.instance.reset();
+    delete this.instance;
   };
 
   animateValue = () => {
+    this.stopAnimation();
+
     const {
       duration, begin, easing, complete, run, delay, value,
     } = this.props;
 
-    anime({
+    this.instance = anime({
       targets: this.target,
       animatedValue: value,
       duration,
