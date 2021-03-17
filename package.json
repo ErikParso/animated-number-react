@@ -9,7 +9,7 @@
     "demo": "node scripts/demo.js",
     "test": "node scripts/test.js --env=jsdom",
     "lint": "eslint src/**/*.js",
-    "prepublish": "npm run lint && npm run test && npm run build"
+    "prepublish": "npm run lint && npm run build"
   },
   "repository": "https://github.com/Leocardoso94/animated-number-react",
   "license": "MIT",
